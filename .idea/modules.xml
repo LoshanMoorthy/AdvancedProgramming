@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Avanceret Programmering.iml" filepath="$PROJECT_DIR$/Avanceret Programmering.iml" />
+      <module fileurl="file://$PROJECT_DIR$/L01 - Oberserver and Adapter/L01 - Oberserver and Adapter.iml" filepath="$PROJECT_DIR$/L01 - Oberserver and Adapter/L01 - Oberserver and Adapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/L02 - Binary Search Tree/L02 - Binary Search Tree.iml" filepath="$PROJECT_DIR$/L02 - Binary Search Tree/L02 - Binary Search Tree.iml" />
+    </modules>
+  </component>
+</project>
