@@ -1,5 +1,7 @@
 package bst;
 
+import java.util.ArrayList;
+
 public class BST<E> implements Tree<E> {
     protected TreeNode<E> root;
     protected int size = 0;
@@ -134,7 +136,7 @@ public class BST<E> implements Tree<E> {
     }
 
 
-    /* Left, Right Root */
+    /* Left, Right, Root */
     @Override
     /** Preorder traversal from the root */
     public void preorder() {
@@ -255,24 +257,103 @@ public class BST<E> implements Tree<E> {
             return 1 + Math.max(height(node.left), height(node.right));
     }
 
+    public E findMin() {
+        return findMin(root);
+    }
+
+    private E findMin(TreeNode<E> node) {
+        if (node.left == null)
+            return node.element;
+        return findMin(node.left);
+    }
+
+    public E findMax() {
+        return findMax(root);
+    }
+
+    public E findMax(TreeNode<E> node) {
+        TreeNode<E> current = node;
+        while (current.right != null)
+            current = current.right;
+        return current.element;
+    }
+
+    public int sum() {
+        return sum(root);
+    }
+
+    private int sum(TreeNode<E> node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int leftSum = sum(node.left);
+            int rightSum = sum(node.right);
+
+            return leftSum + rightSum + (Integer)node.element;
+        }
+    }
+
+    public E removeMin() {
+        if (root == null) return null;
+
+        TreeNode<E> parent = null;
+        TreeNode<E> current = root;
+
+        while (current.left != null) {
+            parent = current;
+            current = current.left;
+        }
+
+        if (parent == null)
+            root = current.right;
+        else
+            parent.left = current.right;
+
+        size--;
+        return current.element;
+    }
+
+    public E removeMax() {
+        if (root == null) return null;
+
+        TreeNode<E> parent = null;
+        TreeNode<E> current = root;
+
+        while (current.right != null) {
+            parent = current;
+            current = current.right;
+        }
+
+        // Current points at biggest element
+        if (parent == null)
+            // Træet har kun en knude, eller det største element er roden
+
+            // Update root to be the biggest element of left child
+            root = current.left;
+        else
+            // Remove biggest element and re-arrange tree
+            parent.right = current.left;
+
+        size--;
+        return current.element;
+    }
+
+
 //
     //-------------------------------------------------------------------
 
     public static void main(String[] args) {
-        // Create a BST from the figure provided
         BST<Integer> tree = new BST<>();
         tree.insert(45);
         tree.insert(22);
         tree.insert(11);
         tree.insert(30);
         tree.insert(77);
-        tree.insert(72);
         tree.insert(90);
         tree.insert(15);
         tree.insert(25);
         tree.insert(88);
 
-        // Perform the traversals
         System.out.print("Inorder traversal: ");
         tree.inorder();
         System.out.println();
@@ -290,6 +371,15 @@ public class BST<E> implements Tree<E> {
         System.out.println("Is the node with element 22 internal? " + tree.isInternal(tree.searchNode(22)));
 
         System.out.println("The height of the tree is: " + tree.height());
+
+        System.out.println("Min value of tree: " + tree.findMin());
+        System.out.println("Max value of tree: " + tree.findMax());
+
+        System.out.println("Sum of tree: " + tree.sum());
+
+        tree.removeMin();
+        System.out.println("After removal of min: ");
+        tree.inorder();
     }
 
 }
