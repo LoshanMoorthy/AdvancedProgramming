@@ -1,5 +1,7 @@
 package bst;
 
+import java.util.ArrayList;
+
 public class BST<E> implements Tree<E> {
     protected TreeNode<E> root;
     protected int size = 0;
@@ -134,7 +136,7 @@ public class BST<E> implements Tree<E> {
     }
 
 
-    /* Left, Right Root */
+    /* Left, Right, Root */
     @Override
     /** Preorder traversal from the root */
     public void preorder() {
@@ -255,24 +257,129 @@ public class BST<E> implements Tree<E> {
             return 1 + Math.max(height(node.left), height(node.right));
     }
 
-//
-    //-------------------------------------------------------------------
+    private E findMin() {
+        return findMin(root);
+    }
+
+    private E findMin(TreeNode<E> node) {
+        if (node.left == null)
+            return node.element;
+        return findMin(node.left);
+    }
+
+    public E findMax() {
+        return findMax(root);
+    }
+
+    private E findMax(TreeNode<E> node) {
+        TreeNode<E> current = node;
+        while (current.right != null)
+            current = current.right;
+        return current.element;
+    }
+
+    public int sum() {
+        return sum(root);
+    }
+
+    private int sum(TreeNode<E> node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int leftSum = sum(node.left);
+            int rightSum = sum(node.right);
+
+            return leftSum + rightSum + (Integer)node.element;
+        }
+    }
+
+    public E removeMin() {
+        // Tjek om træet er tomt
+        if (root == null) return null;
+
+        // Nuværende node og forældre
+        TreeNode<E> parent = null;
+        TreeNode<E> current = root;
+
+        // Find det mindste element (yderst venstre element)
+        while (current.left != null) {
+            parent = current; // Nuværende node
+            current = current.left; // Mindste node
+        }
+
+        // Hvis det mindste element er roden selv
+        // opdater træets rod til at være det mindste element af højre barn.
+        if (parent == null)
+            root = current.right;
+        else
+            // Hvis mindste element har parent så fjern referencen
+            parent.left = current.right;
+
+        // Reducer størrelsen af træet
+        size--;
+        return current.element;
+    }
+
+    public E removeMax() {
+        // Tjek om træet er tomt
+        if (root == null) return null;
+
+        // Nuværende node og dens parent
+        TreeNode<E> parent = null;
+        TreeNode<E> current = root;
+
+        // Find det største element (yderst højre element)
+        while (current.right != null) {
+            parent = current; // Nuværende node eller currents parent
+            current = current.right; // Største node
+        }
+
+        // Hvis største element er roden selv
+        // Opdater træets rod til at være det største element af venstre barn
+        if (parent == null)
+            root = current.left;
+        else
+            // Hvis største element har parent så fjern referencen
+            parent.right = current.left;
+
+        // Reducer størrelsen af træet
+        size--;
+        return current.element;
+    }
+
+    public ArrayList<E> greatherThan(E element) {
+        ArrayList<E> result = new ArrayList<>();
+        greatherThanHelper(root, element, result);
+        return result;
+    }
+
+    private void greatherThanHelper(TreeNode<E> node, E element, ArrayList<E> result) {
+        if (node == null) return;
+
+        // Traversing left subtree, if current element is greather than given element
+        if (c.compare(node.element, element) > 0)
+            greatherThanHelper(node.left, element, result);
+
+        // Add current element if bigger than given element
+        if (c.compare(node.element, element) > 0)
+            result.add(node.element);
+
+        // Traverse right subtree because all elements here will be bigger
+        greatherThanHelper(node.right, element, result);
+    }
 
     public static void main(String[] args) {
-        // Create a BST from the figure provided
         BST<Integer> tree = new BST<>();
         tree.insert(45);
         tree.insert(22);
         tree.insert(11);
         tree.insert(30);
         tree.insert(77);
-        tree.insert(72);
         tree.insert(90);
         tree.insert(15);
         tree.insert(25);
         tree.insert(88);
 
-        // Perform the traversals
         System.out.print("Inorder traversal: ");
         tree.inorder();
         System.out.println();
@@ -290,6 +397,24 @@ public class BST<E> implements Tree<E> {
         System.out.println("Is the node with element 22 internal? " + tree.isInternal(tree.searchNode(22)));
 
         System.out.println("The height of the tree is: " + tree.height());
-    }
 
+        System.out.println("Min value of tree: " + tree.findMin());
+        System.out.println("Max value of tree: " + tree.findMax());
+
+        System.out.println("Sum of tree: " + tree.sum());
+
+        tree.removeMin();
+        System.out.println("After removal of min: ");
+        tree.inorder();
+
+        System.out.println();
+
+        tree.removeMax();
+        System.out.println("After removal of max:");
+        tree.inorder();
+
+        System.out.println();
+
+        System.out.println(tree.greatherThan(15));
+    }
 }
