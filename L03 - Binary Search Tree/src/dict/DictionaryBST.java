@@ -11,8 +11,7 @@ Dictionary<K, V> {
 
 	@Override
 	public V get(K key) {
-		// TODO
-		return null;
+		return find(key).value;
 
 	}
 
@@ -45,10 +44,38 @@ Dictionary<K, V> {
 
 	@Override
 	public V put(K key, V value) {
-		// TODO
-		return null;
+		if (root == null) {
+			root = new Node(key, value);
+			return null;
+		} else {
+			Node parent = null;
+			Node current = root;
+			while (current != null) {
+				parent = current;
+				int compare = key.compareTo(current.key);
+				if (compare < 0) {
+					current = current.right;
+				} else if (compare > 0) {
+					current = current.left;
+				} else {
+					V oldValue = current.value;
+					current.value = value;
+					return oldValue;
+				}
+			}
 
+			int compare = key.compareTo(parent.key);
+			if (compare < 0) {
+				parent.left = new Node(key, value);
+			} else {
+				parent.right = new Node(key, value);
+			}
+
+			return null;
+		}
 	}
+
+	private
 
 	@Override
 	public V remove(K key) {

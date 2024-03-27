@@ -257,7 +257,7 @@ public class BST<E> implements Tree<E> {
             return 1 + Math.max(height(node.left), height(node.right));
     }
 
-    public E findMin() {
+    private E findMin() {
         return findMin(root);
     }
 
@@ -271,7 +271,7 @@ public class BST<E> implements Tree<E> {
         return findMax(root);
     }
 
-    public E findMax(TreeNode<E> node) {
+    private E findMax(TreeNode<E> node) {
         TreeNode<E> current = node;
         while (current.right != null)
             current = current.right;
@@ -294,53 +294,79 @@ public class BST<E> implements Tree<E> {
     }
 
     public E removeMin() {
+        // Tjek om træet er tomt
         if (root == null) return null;
 
+        // Nuværende node og forældre
         TreeNode<E> parent = null;
         TreeNode<E> current = root;
 
+        // Find det mindste element (yderst venstre element)
         while (current.left != null) {
-            parent = current;
-            current = current.left;
+            parent = current; // Nuværende node
+            current = current.left; // Mindste node
         }
 
+        // Hvis det mindste element er roden selv
+        // opdater træets rod til at være det mindste element af højre barn.
         if (parent == null)
             root = current.right;
         else
+            // Hvis mindste element har parent så fjern referencen
             parent.left = current.right;
 
+        // Reducer størrelsen af træet
         size--;
         return current.element;
     }
 
     public E removeMax() {
+        // Tjek om træet er tomt
         if (root == null) return null;
 
+        // Nuværende node og dens parent
         TreeNode<E> parent = null;
         TreeNode<E> current = root;
 
+        // Find det største element (yderst højre element)
         while (current.right != null) {
-            parent = current;
-            current = current.right;
+            parent = current; // Nuværende node eller currents parent
+            current = current.right; // Største node
         }
 
-        // Current points at biggest element
+        // Hvis største element er roden selv
+        // Opdater træets rod til at være det største element af venstre barn
         if (parent == null)
-            // Træet har kun en knude, eller det største element er roden
-
-            // Update root to be the biggest element of left child
             root = current.left;
         else
-            // Remove biggest element and re-arrange tree
+            // Hvis største element har parent så fjern referencen
             parent.right = current.left;
 
+        // Reducer størrelsen af træet
         size--;
         return current.element;
     }
 
+    public ArrayList<E> greatherThan(E element) {
+        ArrayList<E> result = new ArrayList<>();
+        greatherThanHelper(root, element, result);
+        return result;
+    }
 
-//
-    //-------------------------------------------------------------------
+    private void greatherThanHelper(TreeNode<E> node, E element, ArrayList<E> result) {
+        if (node == null) return;
+
+        // Traversing left subtree, if current element is greather than given element
+        if (c.compare(node.element, element) > 0)
+            greatherThanHelper(node.left, element, result);
+
+        // Add current element if bigger than given element
+        if (c.compare(node.element, element) > 0)
+            result.add(node.element);
+
+        // Traverse right subtree because all elements here will be bigger
+        greatherThanHelper(node.right, element, result);
+    }
 
     public static void main(String[] args) {
         BST<Integer> tree = new BST<>();
@@ -380,6 +406,15 @@ public class BST<E> implements Tree<E> {
         tree.removeMin();
         System.out.println("After removal of min: ");
         tree.inorder();
-    }
 
+        System.out.println();
+
+        tree.removeMax();
+        System.out.println("After removal of max:");
+        tree.inorder();
+
+        System.out.println();
+
+        System.out.println(tree.greatherThan(15));
+    }
 }
