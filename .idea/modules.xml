@@ -8,6 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/L03 - Binary Search Tree/L03 - Binary Search Tree.iml" filepath="$PROJECT_DIR$/L03 - Binary Search Tree/L03 - Binary Search Tree.iml" />
       <module fileurl="file://$PROJECT_DIR$/L03 - Hashing/L03 - Hashing.iml" filepath="$PROJECT_DIR$/L03 - Hashing/L03 - Hashing.iml" />
       <module fileurl="file://$PROJECT_DIR$/L04 - Hashing/L04 - Hashing.iml" filepath="$PROJECT_DIR$/L04 - Hashing/L04 - Hashing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/L06 - Factory/L06 - Factory.iml" filepath="$PROJECT_DIR$/L06 - Factory/L06 - Factory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/L07 - Graphs/L07 - Graphs.iml" filepath="$PROJECT_DIR$/L07 - Graphs/L07 - Graphs.iml" />
     </modules>
   </component>
 </project>
