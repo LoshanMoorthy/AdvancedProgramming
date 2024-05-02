@@ -54,11 +54,9 @@ public class HashSetChaining {
 		while (!found && current != null) {
 			if (current.data.equals(x)) {
 				found = true;
-				// Already in the set
 			} else {
 				current = current.next;
 			}
-
 		}
 		if (!found) {
 			Node newNode = new Node();
@@ -66,6 +64,11 @@ public class HashSetChaining {
 			newNode.next = buckets[h];
 			buckets[h] = newNode;
 			currentSize++;
+
+			double loadFactor = (double) currentSize / buckets.length;
+			if (loadFactor > 0.75) {
+				rehash();
+			}
 		}
 		return !found;
 	}
@@ -104,16 +107,17 @@ public class HashSetChaining {
 		Node[] oldBuckets = buckets;
 		buckets = new Node[oldBuckets.length * 2];
 
-		currentSize = 0;
-
 		for (Node head : oldBuckets) {
 			Node current = head;
 			while (current != null) {
-				add(current);
+				Object data = current.data;
 				current = current.next;
+				this.currentSize--;
+				add(data);
 			}
 		}
 	}
+
 
 	private int hashValue(Object x) {
 		int h = x.hashCode();

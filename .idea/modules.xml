@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/L04 - Hashing/L04 - Hashing.iml" filepath="$PROJECT_DIR$/L04 - Hashing/L04 - Hashing.iml" />
       <module fileurl="file://$PROJECT_DIR$/L06 - Factory/L06 - Factory.iml" filepath="$PROJECT_DIR$/L06 - Factory/L06 - Factory.iml" />
       <module fileurl="file://$PROJECT_DIR$/L07 - Graphs/L07 - Graphs.iml" filepath="$PROJECT_DIR$/L07 - Graphs/L07 - Graphs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/L08 - Graphs 2/L08 - Graphs 2.iml" filepath="$PROJECT_DIR$/L08 - Graphs 2/L08 - Graphs 2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/L09 - Streams/L09 - Streams.iml" filepath="$PROJECT_DIR$/L09 - Streams/L09 - Streams.iml" />
     </modules>
   </component>
 </project>
